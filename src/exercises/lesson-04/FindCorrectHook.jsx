@@ -25,7 +25,7 @@ export default function FindCorrectHook() {
     </div>
   );
 }
-// We use useRef instead of useState because the explicit requirement is to avoid
+// I use useRef instead of useState because the explicit requirement is to avoid
 // a re-render. useState forces React to redraw the component on every change.
 // By using one useRef for the counter and a second reference to target the button,
 // we can mutate the internal value and manipulate the DOM text directly,
