@@ -7,9 +7,13 @@ export default function BugStrictMode() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       setCount((c) => c + 1);
     }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   return (
@@ -20,4 +24,6 @@ export default function BugStrictMode() {
   );
 }
 
-// Write your explanation of how StrictMode helps us catch this bug
+// React StrictMode tests our app by starting, stopping, and restarting it quickly
+// If i don't write a cleanup function, the first timer never stops
+// The `return clearInterval` line tells React to turn off the old timer before starting a new one, preventing double-counting
