@@ -14,11 +14,15 @@ export default function BugEffectLoop() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    setCount(count + 1);
-  });
+    setCount((prevCount) => prevCount + 1);
+  }, []); // <----
 
   return <p>Bug 1 Count: {count}</p>;
 }
 
 // Explanation:
-// (Write your explanation here)
+// If we don't put the `[]` at the end, useEffect runs every time the component renders,
+// causing an infinite loop. Adding `[]` tells React to run this code only once.
+// Also, we used `(prevCount) => prevCount + 1`.
+// Sometimes React gets confused and uses an old 'count' number.
+// Using `prevCount =>` tells React: "always grab the most recent number you have saved, and add 1 to it."
