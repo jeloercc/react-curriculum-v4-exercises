@@ -11,12 +11,13 @@
 
   Use the commented "Explanation" section at the bottom of this lesson's components.
 */
+import { useState } from 'react';
 
 export default function BugProps({ name = 'friend' }) {
-  let message = 'Hello, ' + name;
+  const [message, setMessage] = useState('Hello, ' + name); //<-----
 
   function handleChange() {
-    message = 'Hi, ' + name + '!';
+    setMessage('Hi, ' + name + '!'); //<-----
   }
 
   return (
@@ -28,4 +29,7 @@ export default function BugProps({ name = 'friend' }) {
 }
 
 // Explanation:
-// (Write your explanation here)
+// We tried to change the text using a normal variable (`let message`).
+// React doesn't watch normal variables, so the screen didn't update when we clicked.
+// By using `useState`, we tell React to pay attention and re-render the screen
+// whenever we update the message with `setMessage`.

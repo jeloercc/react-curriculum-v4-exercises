@@ -13,8 +13,7 @@ export default function BugMutatedState() {
   let [count, setCount] = useState(0);
 
   function handleAdd() {
-    count++;
-    setCount(count);
+    setCount((prevCount) => prevCount + 1); //<-----
   }
 
   return (
@@ -26,4 +25,7 @@ export default function BugMutatedState() {
 }
 
 // Explanation:
-// (Write your explanation here)
+// We used `count++`, which modifies the state variable directly. In React, state must
+// be treated as immutable (unchangeable directly). If we mutate it, React might not
+// realize it needs to re-render the screen. The fix is to remove `count++` and only
+// update the value using the `setCount` function.
