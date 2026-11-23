@@ -1,54 +1,45 @@
 const POSTS_ENDPOINT = 'https://jsonplaceholder.typicode.com/posts/';
 
-/**
- * Instructions:
- * The `POSTS_ENDPOINT` url returns a list of post objects
- * from the JSONPlaceholder API.
- * Your task is to finish implementing the two functions in this file
- * so that they fetch data from the API and return the results as JSON.
- * Then, you will use that data in `<FetchOnRender>` and `<FetchOnClick>`.
- *
- * TIP: A request to `https://jsonplaceholder.typicode.com/posts/`
- * returns an array of posts.
- * A request to `https://jsonplaceholder.typicode.com/posts/1`
- * returns a single post object with an `id` of 1.
- * Try pasting those URLs into your browser to see the results!
- */
-
-/**
- * Should return an array of posts with the following properties:
- * - userId
- * - id
- * - title
- * - body
- */
-export function getPosts() {
+// Retrieves all posts and returns them as an array of objects.
+export async function getPosts() {
   console.log('[getPosts]: fetching list of posts');
 
-  // TODO: use this `url` const to fetch the list of posts
-  // and return some JSON data.
-  // You may delete this comment once you've finished the implementation.
-  // eslint-disable-next-line no-unused-vars
-  const url = POSTS_ENDPOINT;
+  const url = `${POSTS_ENDPOINT}?_limit=10`;
+  const response = await fetch(url);
+  // Throw an error if the server returns an unsuccessful HTTP status.
+  if (!response.ok) {
+    throw new Error(
+      `[getPosts]: failed to fetch, HTTP error ${response.status}`
+    );
+  }
+  // Parse the response body from JSON into JavaScript data.
+  const data = await response.json();
+
+  console.log(data);
+  return data;
 }
 
-/**
- * Should return a single post object with the following properties:
- * - userId
- * - id
- * - title
- * - body
- */
-export function getSinglePost(postId) {
+// Retrieves a single post by its ID and returns it as an object.
+export async function getSinglePost(postId) {
+  // Prevent requests when no post ID is provided.
   if (!postId) {
     throw new Error('[getSinglePost]: postId parameter is required!');
   }
 
   console.log('[getSinglePost]: fetching post with id:', postId);
-
-  // TODO: use this `url` const to fetch the single post
-  // and return some JSON data.
-  // You may delete this comment once you've finished the implementation.
-  // eslint-disable-next-line no-unused-vars
+  // Build the endpoint URL for the requested post.
   const url = `${POSTS_ENDPOINT}${postId}`;
+  const response = await fetch(url);
+
+  // Throw an error if the server returns an unsuccessful HTTP status.
+  if (!response.ok) {
+    throw new Error(
+      `[getSinglePost]: failed to fetch, HTTP error ${response.status}`
+    );
+  }
+
+  // Parse the JSON response into a single post object.
+  const data = await response.json();
+  console.log(data);
+  return data;
 }
