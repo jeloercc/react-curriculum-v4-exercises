@@ -6,7 +6,9 @@ export default function BugEventPropagation() {
     alert("RED BOX CLICKED ❌ Don't show me!");
   }
 
-  function handleInnerClick() {
+  function handleInnerClick(event) {
+    // Stop the event from bubbling up to the parent container
+    event.stopPropagation();
     alert('Button Clicked ✅');
   }
 
@@ -22,3 +24,7 @@ export default function BugEventPropagation() {
     </>
   );
 }
+//I use `event.stopPropagation()` inside the `handleInnerClick` function
+// to prevent the click event from "bubbling up" from the inner button to the outer red box.
+// Without this method, clicking the button would trigger both alerts sequentially because
+// the event naturally propagates up through parent elements in the DOM.
